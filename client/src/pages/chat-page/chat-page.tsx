@@ -1,6 +1,7 @@
 import styles from './chat.module.css';
 import Messages from '../../components/messages/messages';
 import { Socket } from 'socket.io-client';
+import SendMessage from '../../components/send-message/send-message';
 
 
 type ChatPageProps = {
@@ -14,6 +15,7 @@ function ChatPage({ userName, room, socket }: ChatPageProps): JSX.Element {
     <div className={styles.chatContainer}>
       <div>
         <Messages socket={socket} />
+        <SendMessage socket={socket} userNmae={userName} room={room} />
       </div>
     </div>
   );
