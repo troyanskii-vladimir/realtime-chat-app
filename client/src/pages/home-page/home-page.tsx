@@ -17,7 +17,6 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
   const navigate = useNavigate();
 
   const joinRoom = () => {
-    console.log({userName, room});
     if (room !== '' && userName !== '') {
       socket.emit('join_room', {userName, room});
 
@@ -48,7 +47,7 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
         {
           ['javascript', 'node', 'react', 'express'].map((obj, index) => {
             return (
-              <div className={styles.form_radio_btn}>
+              <div className={styles.form_radio_btn} key={obj}>
                 <input id={`radio-${index}`} type="radio" name="radio" value={obj} onChange={(evt) => {
                   setRoom(evt.target.value);
                 }} />

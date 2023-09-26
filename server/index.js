@@ -1,7 +1,10 @@
+import {} from 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import { Server } from 'socket.io';
 import { createServer } from 'node:http';
+
+import harperSaveMessage from './services/harperSaveMessage.js';
 
 const app = express();
 const server = createServer(app);
@@ -47,6 +50,15 @@ io.on('connection', (socket) => {
 		let chatRoomUsers = allUsers.filter((user) => user.room === room);
 		socket.to(room).emit('chatroom_users', chatRoomUsers);
 		socket.emit('chatroom_users', chatRoomUsers);
+	});
+
+	socket.on('send_message', (data) => {
+		const { message, userName, room, __createdtime__ } = data;
+		io.in(room).emit('recieve_message', data);
+		console.log(message, userName, room, __createdtime__)
+		harperSaveMessage(message, userName, room, __createdtime__)
+			.then((res) => console.log(res))
+			.catch((err) => console.log(err));
 	});
 });
 
