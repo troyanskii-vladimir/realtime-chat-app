@@ -17,6 +17,7 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
   const navigate = useNavigate();
 
   const joinRoom = () => {
+    console.log({userName, room});
     if (room !== '' && userName !== '') {
       socket.emit('join_room', {userName, room});
 
@@ -26,8 +27,15 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
 
   return (
     <div className={styles.container}>
+
+      <div className={styles.textContainer}>
+        <h2 className={styles.mainTitle}>Chat app</h2>
+        <h3 className={styles.description}>Чат приложение для обмена сообщениями между пользователями в реальном времени с возможностью выбора комнаты</h3>
+        <button className={styles.btn} onClick={joinRoom}>Войти в чат</button>
+      </div>
+
+
       <div className={styles.formContainer}>
-        <h2>{`<>DevRooms</>`}</h2>
         <input
           className={styles.input}
           placeholder='Username...'
@@ -36,21 +44,28 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
           }}
         />
 
-        <select
-          className={styles.input}
-          onChange={(evt) => {
-            setRoom(evt.target.value);
-          }}
-        >
-          <option>-- Select Room --</option>
-          <option value='javascript'>JavaScript</option>
-          <option value='node'>Node</option>
-          <option value='express'>Express</option>
-          <option value='react'>React</option>
-        </select>
+        <ul className={styles.chatList}>
+          <li className={styles.form_radio_btn}>
+            <input id="1" type="radio" name="radio"value="1" />
+            <label htmlFor="1">javascript</label>
+          </li>
+        </ul>
 
-        <button onClick={joinRoom}>Join Room</button>
+        {/* {
+          ['javascript', 'node', 'react', 'express'].map((obj, index) => {
+            return (
+              <div className={styles.form_radio_btn}>
+                <input id={`radio-${index}`} type="radio" name="radio" value={obj} onChange={(evt) => {
+                  setRoom(evt.target.value);
+                }} />
+                <label htmlFor={`radio-${index}`}>{obj}</label>
+              </div>
+            );
+          })
+        } */}
+
       </div>
+
     </div>
   );
 }

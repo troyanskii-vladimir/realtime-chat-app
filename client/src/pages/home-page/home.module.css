@@ -2,20 +2,70 @@
   height: 100vh;
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  background: rgb(63, 73, 204);
+  background: rgb(255, 255, 255);
+  box-sizing: border-box;
 }
-.formContainer {
-  width: 400px;
+.textContainer {
+  width: 35%;
   margin: 0 auto 0 auto;
   padding: 32px;
-  background: lightblue;
-  border-radius: 6px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 28px;
+  background: rgba(255, 133, 0, 1.0);
+  border-radius: 20px;
+}
+.mainTitle {
+  font-family: 'Jost', sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  color: #3C096C;
+  font-size: 50px;
+  letter-spacing: 0em;
+  text-transform: uppercase;
+  line-height: 1.0;
+  text-align: center;
+  margin: 0;
+}
+.description {
+  color: red;
+  font-family: 'Jost', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #3C096C;
+  opacity: 0.8;
+  margin: 0;
+  text-align: center;
+}
+.btn {
+  display: block;
+  padding: 10px 30px;
+  border-radius: 15px;
+  cursor: pointer;
+  border: none;
+  margin-top: 32px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: 'Jost', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  text-transform: uppercase;
+  background-color: #3C096C;
+  color:rgb(255, 133, 0);
+  transition: all 0.2s;
+}
+.btn:hover {
+  background-color: #f7eeff;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+
+.formContainer {
+  width: 40%;
+  margin: 0 auto 0 auto;
+  padding: 32px;
+  background: rgba(127, 17, 224, 1);
+  border-radius: 20px;
 }
 .input {
   width: 100%;
@@ -24,27 +74,23 @@
   border: 1px solid rgb(63, 73, 204);
   font-size: 0.9rem;
 }
-.input option {
-  margin-top: 20px;
+.chatList {
+  background-color: aliceblue;
 }
-.btn {
-  padding: 14px 14px;
-  border-radius: 6px;
-  font-weight: bold;
-  font-size: 1.1rem;
-  cursor: pointer;
-  border: none;
+
+.form_radio_btn {
+	display: inline-block;
+	margin-right: 10px;
 }
-.btn-outline {
-  color: rgb(153, 217, 234);
-  border: 1px solid rgb(153, 217, 234);
-  background: rgb(63, 73, 204);
+.form_radio_btn input[type=radio] {
+	display: none;
 }
-.btn-primary {
-  background: rgb(153, 217, 234);
-  color: rgb(0, 24, 111);
-}
-.btn-secondary {
-  background: rgb(0, 24, 111);
-  color: #fff;
+.form_radio_btn label {
+	display: inline-block;
+	cursor: pointer;
+	padding: 0px 15px;
+	line-height: 34px;
+	border: 1px solid #999;
+	border-radius: 6px;
+	user-select: none;
 }
