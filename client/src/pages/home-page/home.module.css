@@ -8,19 +8,20 @@
   box-sizing: border-box;
   max-width: 1000px;
   margin: auto;
+  background: rgba(0, 0, 0, 0);
 }
 .textContainer {
   width: 35%;
   margin: 0 auto 0 auto;
   padding: 32px;
-  background: rgba(255, 133, 0, 1.0);
+  background: rgba(255, 105, 51, 1);
   border-radius: 20px;
 }
 .mainTitle {
   font-family: 'Jost', sans-serif;
   font-weight: 700;
   font-style: normal;
-  color: #3C096C;
+  color: rgba(41, 50, 65, 1);
   font-size: 50px;
   letter-spacing: 0em;
   text-transform: uppercase;
@@ -29,12 +30,11 @@
   margin: 0;
 }
 .description {
-  color: red;
   font-family: 'Jost', sans-serif;
   font-weight: 700;
   font-size: 12px;
   text-transform: uppercase;
-  color: #3C096C;
+  color: rgba(41, 50, 65, 1);
   opacity: 0.8;
   margin: 0;
   text-align: center;
@@ -52,13 +52,13 @@
   font-weight: 700;
   font-size: 18px;
   text-transform: uppercase;
-  background-color: #3C096C;
-  color:rgb(255, 133, 0);
-  transition: all 0.2s;
-  box-shadow: rgba(255, 255, 255, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-}
-.btn:hover {
   background-color: #f7eeff;
+  color:rgba(255, 105, 51, 1);
+  transition: all 0.2s;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+  .btn:hover {
+  background-color: rgba(41, 50, 65, 1);
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
@@ -67,7 +67,7 @@
   width: 40%;
   margin: 0 auto 0 auto;
   padding: 32px;
-  background: rgba(127, 17, 224, 1);
+  background: rgb(185, 214, 79);
   border-radius: 20px;
 }
 .input {
@@ -76,11 +76,11 @@
   border-radius: 15px;
   box-sizing: border-box;
   margin-bottom: 20px;
-  border: 5px solid rgb(255, 133, 0);
   background-color: rgb(228, 228, 228);
   font-family: 'Jost', sans-serif;
   font-weight: 400;
   font-size: 17px;
+  border: 2px solid rgba(41, 50, 65, 1);
 }
 .chatList {
   border-radius: 15px;
@@ -91,14 +91,19 @@
   display: flex;
   flex-direction: column;
   justify-content: start;
-  padding: 5px 15px;
+  padding: 5px 10px;
   margin-bottom: 0;
-  border: 5px solid rgb(255, 133, 0);
   background-color: rgb(228, 228, 228);
+  border: 2px solid rgb(41, 50, 65);
+  color: #f7eeff;
 }
-
 .form_radio_btn {
 	display: inline-block;
+  border-radius: 15px;
+  padding: 0 15px;
+  margin: 5px 0;
+  transition: all 0.2s;
+  background-color: rgb(41, 50, 65);
 }
 .form_radio_btn input[type=radio] {
 	display: none;
@@ -108,18 +113,16 @@
 	display: inline-block;
 	cursor: pointer;
 	line-height: 34px;
-	border-bottom: 1px solid rgb(255, 133, 0);
 	user-select: none;
-  background-color: rgb(228, 228, 228);
   font-family: 'Jost', sans-serif;
   font-weight: 400;
   font-size: 17px;
 }
-.form_radio_btn label:hover {
-  /* background-color: red; */
-  text-shadow: 2px 4px 3px rgba(0,0,0,0.3)
+.form_radio_btn:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 20px 21px, rgba(0, 0, 0, 0.12) 0px -6px 15px, rgba(0, 0, 0, 0.12) 0px 3px 5px, rgba(0, 0, 0, 0.17) 0px 4px 5px, rgba(0, 0, 0, 0.09) 0px -3px 4px;
 }
 .form_radio_btn input[type=radio]:checked + label {
-  background-color: rgba(127, 17, 224, 0.2);
-  box-shadow: rgba(255, 133, 0, 0.55) 0px 50px 100px -10px, rgba(255, 133, 0, 0.1) 0px 30px 60px -10px, rgba(255, 133, 0, 0.65) 0px -2px 6px 0px inset;
+  height: 50px;
+  color: rgba(255, 105, 51, 1);
+  font-weight: 700;
 }

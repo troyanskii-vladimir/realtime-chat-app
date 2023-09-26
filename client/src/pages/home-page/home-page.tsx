@@ -52,7 +52,7 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
                 <input id={`radio-${index}`} type="radio" name="radio" value={obj} onChange={(evt) => {
                   setRoom(evt.target.value);
                 }} />
-                <label htmlFor={`radio-${index}`}>{obj}</label>
+                <label htmlFor={`radio-${index}`}>{`${obj[0].toLocaleUpperCase()}${obj.slice(1)}`}</label>
               </div>
             );
           })
