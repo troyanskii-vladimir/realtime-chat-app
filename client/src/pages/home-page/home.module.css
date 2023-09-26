@@ -70,27 +70,53 @@
 .input {
   width: 100%;
   padding: 12px;
-  border-radius: 6px;
-  border: 1px solid rgb(63, 73, 204);
-  font-size: 0.9rem;
+  border-radius: 15px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  border: 5px solid rgb(255, 133, 0);
+  background-color: rgb(228, 228, 228);
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 17px;
 }
 .chatList {
+  border-radius: 15px;
+  width: 100%;
+  height: 350px;
+  box-sizing: border-box;
   background-color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding: 5px 15px;
+  margin-bottom: 0;
+  border: 5px solid rgb(255, 133, 0);
+  background-color: rgb(228, 228, 228);
 }
 
 .form_radio_btn {
 	display: inline-block;
-	margin-right: 10px;
 }
 .form_radio_btn input[type=radio] {
 	display: none;
 }
 .form_radio_btn label {
+  width: 100%;
 	display: inline-block;
 	cursor: pointer;
-	padding: 0px 15px;
 	line-height: 34px;
-	border: 1px solid #999;
-	border-radius: 6px;
+	border-bottom: 1px solid rgb(255, 133, 0);
 	user-select: none;
+  background-color: rgb(228, 228, 228);
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+}
+.form_radio_btn label:hover {
+  /* background-color: red; */
+  text-shadow: 2px 4px 3px rgba(0,0,0,0.3)
+}
+.form_radio_btn input[type=radio]:checked + label {
+  background-color: rgba(127, 17, 224, 0.2);
+  box-shadow: rgba(255, 133, 0, 0.55) 0px 50px 100px -10px, rgba(255, 133, 0, 0.1) 0px 30px 60px -10px, rgba(255, 133, 0, 0.65) 0px -2px 6px 0px inset;
 }

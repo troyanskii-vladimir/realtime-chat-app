@@ -45,13 +45,7 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
         />
 
         <ul className={styles.chatList}>
-          <li className={styles.form_radio_btn}>
-            <input id="1" type="radio" name="radio"value="1" />
-            <label htmlFor="1">javascript</label>
-          </li>
-        </ul>
-
-        {/* {
+        {
           ['javascript', 'node', 'react', 'express'].map((obj, index) => {
             return (
               <div className={styles.form_radio_btn}>
@@ -62,7 +56,10 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
               </div>
             );
           })
-        } */}
+        }
+        </ul>
+
+
 
       </div>
 
