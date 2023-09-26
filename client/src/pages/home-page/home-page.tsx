@@ -58,9 +58,6 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
           })
         }
         </ul>
-
-
-
       </div>
 
     </div>
