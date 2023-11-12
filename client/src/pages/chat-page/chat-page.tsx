@@ -2,11 +2,12 @@ import styles from './chat.module.css';
 import Messages from '../../components/messages/messages';
 import { Socket } from 'socket.io-client';
 import SendMessage from '../../components/send-message/send-message';
+import { Chat } from '../home-page/home-page';
 
 
 type ChatPageProps = {
   userName: string;
-  room: string;
+  room: Chat | null;
   socket: Socket;
 }
 

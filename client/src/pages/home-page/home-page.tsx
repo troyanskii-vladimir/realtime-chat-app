@@ -1,4 +1,4 @@
-import { SetStateAction } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import { Dispatch } from 'react';
 import styles from './home.module.css';
 import { Socket } from 'socket.io-client';
@@ -8,21 +8,38 @@ import { useNavigate } from 'react-router-dom';
 type HomePageProps = {
   userName: string;
   setUserName: Dispatch<SetStateAction<string>>;
-  room: string;
-  setRoom: Dispatch<SetStateAction<string>>;
+  room: Chat | null;
+  setRoom: Dispatch<SetStateAction<Chat | null>>;
   socket: Socket;
+}
+
+export type Chat = {
+  _id: string;
+  chatName: string,
 }
 
 function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps): JSX.Element {
   const navigate = useNavigate();
+  const [chats, setChats] = useState<Chat[]>([]);
+
+  useEffect(() => {
+    socket.on('recieve_chats', (data) => {
+      setChats(data.chats)
+    })
+
+    return () => {
+      socket.off('recieve_message')
+    }
+  }, [socket])
 
   const joinRoom = () => {
-    if (room !== '' && userName !== '') {
+    if (room !== null && userName !== '') {
       socket.emit('join_room', {userName, room});
 
       navigate('/chat', {replace: true});
     }
   };
+
 
   return (
     <div className={styles.container}>
@@ -45,17 +62,27 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
 
         <ul className={styles.chatList}>
         {
-          ['javascript', 'node', 'react', 'express'].map((obj, index) => {
+          chats.length > 0 &&
+          chats.map((chat) => {
             return (
-              <div className={styles.form_radio_btn} key={obj}>
-                <input id={`radio-${index}`} type="radio" name="radio" value={obj} onChange={(evt) => {
-                  setRoom(evt.target.value);
+              <div className={styles.form_radio_btn} key={chat._id}>
+                <input id={`radio-${chat._id}`} type="radio" name="radio" value={chat.chatName} onChange={() => {
+                  setRoom(chat);
                 }} />
-                <label htmlFor={`radio-${index}`}>{`${obj[0].toLocaleUpperCase()}${obj.slice(1)}`}</label>
+                <label htmlFor={`radio-${chat._id}`}>{chat.chatName}</label>
               </div>
             );
           })
         }
+          <div className={styles.form_radio_btn}>
+            <input id="radio-new" name="radio" type="radio" onChange={(evt) => {
+              setRoom(evt.target.value);
+            }} />
+            <label htmlFor="radio-new">
+              <input type='text'></input>
+              <button>Создать чат</button>
+            </label>
+          </div>
         </ul>
       </div>
 

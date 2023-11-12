@@ -1,11 +1,12 @@
 import { Socket } from 'socket.io-client';
 import styles from './send.module.css';
 import { useState } from 'react';
+import { Chat } from '../../pages/home-page/home-page';
 
 
 type SendMessageProps = {
   userName: string;
-  room: string;
+  room: Chat | null;
   socket: Socket;
 }
 
@@ -30,6 +31,11 @@ function SendMessage({ userName, room, socket }: SendMessageProps): JSX.Element 
       />
       <button className='btn btn-primary' onClick={sendMessage}>
         Send Message
+      </button>
+      <button className='btn btn-primary' onClick={() => {
+        socket.emit('get_last_messages', room)
+      }}>
+        Загрузить последние сообщения
       </button>
     </div>
   );

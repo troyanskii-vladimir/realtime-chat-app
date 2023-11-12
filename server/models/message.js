@@ -14,6 +14,11 @@ const MessageSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
+    chatRoom: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'ChatRoom',
+      required: true,
+    }
   },
 );
 

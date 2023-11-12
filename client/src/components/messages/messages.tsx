@@ -16,10 +16,19 @@ type Message = {
 function Messages({ socket }: MessagesProps): JSX.Element {
   const [messagesRecieved, setMessagesRecieved] = useState<Message[]>([]);
 
+  useEffect(() => {
+    socket.on('recieve_last_messages', (data) => {
+      setMessagesRecieved(data);
+    });
+
+    return () => {
+      socket.off('recieve_last_messages')
+    }
+
+  }, [socket])
 
   useEffect(() => {
     socket.on('recieve_message', (data) => {
-      console.log(data);
       setMessagesRecieved((state) => [
         ...state,
         {

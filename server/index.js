@@ -4,9 +4,8 @@ import cors from 'cors';
 import { Server } from 'socket.io';
 import { createServer } from 'node:http';
 
-// import Message from './models/message';
-// const Message = require('./models/message');
 import Message from './models/message.js';
+import ChatRoom from './models/chat-room.js';
 
 
 mongoose
@@ -16,8 +15,7 @@ mongoose
 
 const app = express();
 const server = createServer(app);
-// const client = new MongoClient('mongodb+srv://troyanskii1998:qBPchyxPQYOqjVYq@cluster0.ac2ajjj.mongodb.net/?retryWrites=true&w=majority');
-// mongoose.connect('mongodb+srv://troyanskii1998:qBPchyxPQYOqjVYq@cluster0.ac2ajjj.mongodb.net/?retryWrites=true&w=majority')
+
 
 app.use(cors());
 
@@ -34,71 +32,72 @@ let chatRoom = '';
 let allUsers = [];
 
 
-
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
   console.log(`User connected ${socket.id}`);
+  const channels = await ChatRoom.find();
 
-  socket.on('join_room', (data) => {
-    const {userName, room} = data;
-    socket.join(room);
+  socket.emit('recieve_chats', {
+    chats: channels,
+  })
+
+
+  socket.on('join_room', async (data) => {
+    if (!channels.find((channel) => channel.chatName === data.room.chatName)) {
+      const chatRoom = new ChatRoom({
+        chatName: data.room.chatName,
+      });
+      chatRoom.save();
+    }
+
+    socket.join(data.room._id);
 
     let __createdtime__ = Date.now();
 
-    console.log(__createdtime__)
-
-    socket.to(room).emit('recieve_message', {
-      message: `${userName} присоединился к комнате`,
+    socket.to(data.room._id).emit('recieve_message', {
+      message: `${data.userName} присоединился к комнате`,
       userName: CHAT_BOT,
       __createdtime__,
     });
 
     socket.emit('recieve_message', {
-      message: `Привет ${userName}!`,
+      message: `Привет ${data.userName}!`,
       userName: CHAT_BOT,
       __createdtime__,
     });
 
-    chatRoom = room;
-    allUsers.push({id: socket.id, userName, room});
-    let chatRoomUsers = allUsers.filter((user) => user.room === room);
-    socket.to(room).emit('chatroom_users', chatRoomUsers);
-    socket.emit('chatroom_users', chatRoomUsers);
+    // chatRoom = data.room.chatName;
+    // allUsers.push({id: socket.id, userName, room});
+    // let chatRoomUsers = allUsers.filter((user) => user.room === room);
+    // socket.to(room).emit('chatroom_users', chatRoomUsers);
+    // socket.emit('chatroom_users', chatRoomUsers);
   });
+
+  socket.on('get_last_messages', async (data) => {
+    const lastMessages = await Message.find({ chatRoom: data.room });
+    console.log(lastMessages)
+
+    socket.emit('recieve_last_messages', lastMessages);
+  })
 
   socket.on('send_message', (data) => {
     console.log(data);
     let __createdtime__ = Date.now();
-    // const { message, userName, room, __createdtime__ } = data;
-    // io.in(room).emit('recieve_message', data);
-    // // console.log(message, userName, room, __createdtime__)
-    // collection.updateOne({ '_id': room }, {
-    //   "$push": {
-    //     'messages': message
-    //   }
-    // })
+
     const message = new Message({
       message: data.message,
       createdAt: __createdtime__,
       userName: data.userName,
+      chatRoom: data.room,
     });
     message.save()
-
+    io.in(data.room._id).emit('recieve_message', data);
   });
 });
 
 
-// express.get("/chats", async (request, response) => {
-//   try {
-//       let result = await collection.findOne({ "_id": request.query.room });
-//       response.send(result);
-//   } catch (e) {
-//       response.status(500).send({ message: e.message });
-//   }
-// });
-
 
 server.listen(4000, async () => {
-  console.timeLog('Server Ok!')
+  console.log('Server Ok!')
   // try {
   //   await client.connect();
   //   collection = client.db('gamedev').collection('chats');
