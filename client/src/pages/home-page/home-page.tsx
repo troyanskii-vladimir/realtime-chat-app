@@ -21,6 +21,8 @@ export type Chat = {
 function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps): JSX.Element {
   const navigate = useNavigate();
   const [chats, setChats] = useState<Chat[]>([]);
+  const [creatingShow, setCreatingShow] = useState<boolean>(false);
+  const [newChatName, setNewChatName] = useState<string>('');
 
   useEffect(() => {
     socket.on('recieve_chats', (data) => {
@@ -59,30 +61,43 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
             setUserName(evt.target.value);
           }}
         />
-
         <ul className={styles.chatList}>
-        {
-          chats.length > 0 &&
-          chats.map((chat) => {
-            return (
-              <div className={styles.form_radio_btn} key={chat._id}>
-                <input id={`radio-${chat._id}`} type="radio" name="radio" value={chat.chatName} onChange={() => {
-                  setRoom(chat);
-                }} />
-                <label htmlFor={`radio-${chat._id}`}>{chat.chatName}</label>
-              </div>
-            );
-          })
-        }
-          <div className={styles.form_radio_btn}>
+          {
+            true &&
+            [{chatName: 'Test1', _id: 1}, {chatName: 'yest23', _id: 2}].map((chat) => {
+              return (
+                <div className={styles.form_radio_btn} key={chat._id}>
+                  <input id={`radio-${chat._id}`} type="radio" name="radio" value={chat.chatName} onChange={() => {
+                    setCreatingShow(false);
+                    setRoom(chat);
+                  }} />
+                  <label htmlFor={`radio-${chat._id}`}>{chat.chatName}</label>
+                </div>
+              );
+            })
+          }
+          <li className={styles.form_radio_btn_new}>
             <input id="radio-new" name="radio" type="radio" onChange={(evt) => {
-              setRoom(evt.target.value);
+              setCreatingShow(evt.target.value);
             }} />
-            <label htmlFor="radio-new">
-              <input type='text'></input>
-              <button>Создать чат</button>
-            </label>
-          </div>
+            {
+              !creatingShow &&
+              <label htmlFor="radio-new">
+                Создать новый чат
+              </label>
+            }
+            {
+              creatingShow &&
+              <div htmlFor="radio-new" className={styles.creating_container}>
+                <input placeholder="Введите название чата" type="text" value={newChatName} onChange={(evt) => setNewChatName(evt.target.value)} />
+                <button onClick={(evt) => {
+                  console.log(newChatName)
+                  socket.emit('create_room', {chatName: newChatName});
+                  setNewChatName('');
+                }}>Создать чат</button>
+              </div>
+            }
+          </li>
         </ul>
       </div>
 
