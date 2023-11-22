@@ -7,6 +7,14 @@ const ChatRoomSchema = new mongoose.Schema(
       require: true,
       unique: true,
     },
+    users: {
+      type: Array,
+      default: [],
+    },
+    onlineUsers: {
+      type: Array,
+      default: [],
+    }
   },
 );
 

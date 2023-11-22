@@ -26,7 +26,7 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
 
   useEffect(() => {
     socket.on('recieve_chats', (data) => {
-      console.log(data.chats)
+      console.log('test')
       setChats(data.chats)
     })
 
@@ -69,7 +69,7 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
         />
         <ul className="chatList">
           {
-            true &&
+            chats &&
             chats.map((chat) => {
               return (
                 <div className="form_radio_btn" key={chat._id}>
