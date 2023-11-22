@@ -26,7 +26,7 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
 
   useEffect(() => {
     socket.on('recieve_chats', (data) => {
-      console.log('test')
+      console.log(data.chats)
       setChats(data.chats)
     })
 

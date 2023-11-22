@@ -7,10 +7,12 @@ type UsersProps = {
 }
 
 function Users({users, onlineUsers}: UsersProps): JSX.Element {
+  const offlineUsers = [...users].filter((user) => !onlineUsers.includes(user));
+
   return (
-    <div className="users online_lis">
+    <div className="users">
       <h3 className="users__title">Список участников</h3>
-      <ul className="users_list">
+      <ul className="users_list online_list">
         {
           onlineUsers?.map((user) => (
             <li className="user__name">
@@ -19,9 +21,9 @@ function Users({users, onlineUsers}: UsersProps): JSX.Element {
           ))
         }
       </ul>
-      <ul className="users_listt">
+      <ul className="users_list">
         {
-          users?.map((user) => (
+          offlineUsers?.map((user) => (
             <li className="user__name">
               {user}
             </li>

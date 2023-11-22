@@ -16,7 +16,6 @@ mongoose
 const app = express();
 const server = createServer(app);
 
-
 app.use(cors());
 
 const io = new Server(server, {
@@ -32,19 +31,13 @@ const io = new Server(server, {
 let allUsers = [];
 let allOnlineUsers = [];
 
-// type User = {
-//   chatName: String,
-//   name: String,
-// }
-
 
 io.on('connection', async (socket) => {
   console.log(`User connected ${socket.id}`);
   let baseUserName = '';
   let baseChatName = '';
   let baseChatId = ''
-
-  const channels = await ChatRoom.find();
+  let channels = await ChatRoom.find();
 
   socket.emit('recieve_chats', {
     chats: channels,
@@ -56,6 +49,12 @@ io.on('connection', async (socket) => {
     });
 
     chatRoom.save();
+
+    channels.push(chatRoom);
+
+    io.emit('recieve_chats', {
+      chats: channels,
+    });
   });
 
   socket.on('join_room', async (data) => {
