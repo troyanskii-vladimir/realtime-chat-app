@@ -1,6 +1,6 @@
 import { SetStateAction, useEffect, useState } from 'react';
 import { Dispatch } from 'react';
-import styles from './home.module.css';
+import './home-page.scss';
 import { Socket } from 'socket.io-client';
 import { useNavigate } from 'react-router-dom';
 
@@ -50,29 +50,29 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
 
 
   return (
-    <div className={styles.container}>
+    <div className="container">
 
-      <div className={styles.textContainer}>
-        <h2 className={styles.mainTitle}>Chat app</h2>
-        <h3 className={styles.description}>Чат приложение для обмена сообщениями между пользователями в реальном времени с возможностью выбора комнаты</h3>
-        <button className={styles.btn} onClick={joinRoom}>Войти в чат</button>
+      <div className="textContainer">
+        <h2 className="mainTitle">Chat app</h2>
+        <h3 className="description">Чат приложение для обмена сообщениями между пользователями в реальном времени с возможностью выбора комнаты</h3>
+        <button className="btn" onClick={joinRoom}>Войти в чат</button>
       </div>
 
 
-      <div className={styles.formContainer}>
+      <div className="formContainer">
         <input
-          className={styles.input}
+          className="input"
           placeholder='Username...'
           onChange={(evt) => {
             setUserName(evt.target.value);
           }}
         />
-        <ul className={styles.chatList}>
+        <ul className="chatList">
           {
             true &&
             chats.map((chat) => {
               return (
-                <div className={styles.form_radio_btn} key={chat._id}>
+                <div className="form_radio_btn" key={chat._id}>
                   <input id={`radio-${chat._id}`} type="radio" name="radio" value={chat.chatName} onChange={() => {
                     setCreatingShow(false);
                     setRoom(chat);
@@ -82,7 +82,7 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
               );
             })
           }
-          <li className={styles.form_radio_btn_new}>
+          <li className="form_radio_btn_new">
             <input id="radio-new" name="radio" type="radio" onChange={(evt) => {
               setCreatingShow(evt.target.value);
             }} />
@@ -94,7 +94,7 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
             }
             {
               creatingShow &&
-              <div className={styles.creating_container}>
+              <div className="creating_container">
                 <input placeholder="Введите название чата" type="text" value={newChatName} onChange={(evt) => setNewChatName(evt.target.value)} />
                 <button onClick={createRoom}>Создать чат</button>
               </div>

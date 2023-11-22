@@ -1,8 +1,9 @@
-import styles from './chat.module.css';
+import './chat-page.scss';
 import Messages from '../../components/messages/messages';
 import { Socket } from 'socket.io-client';
 import SendMessage from '../../components/send-message/send-message';
 import { Chat } from '../home-page/home-page';
+import Users from '../../components/users/users';
 
 
 type ChatPageProps = {
@@ -13,11 +14,10 @@ type ChatPageProps = {
 
 function ChatPage({ userName, room, socket }: ChatPageProps): JSX.Element {
   return (
-    <div className={styles.chatContainer}>
-      <div>
+    <div className="chatContainer">
+        <Users />
         <Messages socket={socket} />
         <SendMessage socket={socket} userName={userName} room={room} />
-      </div>
     </div>
   );
 }

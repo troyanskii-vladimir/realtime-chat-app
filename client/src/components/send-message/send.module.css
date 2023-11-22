@@ -1,6 +1,8 @@
 /* Message input and button */
 .sendMessageContainer {
-  padding: 16px 20px 20px 16px;
+  /* padding: 16px 20px 20px 16px; */
+  width: 100%;
+  height: 20vh;
 }
 .messageInput {
   padding: 14px;

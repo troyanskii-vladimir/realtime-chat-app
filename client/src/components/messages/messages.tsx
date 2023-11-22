@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import styles from './messages.module.css';
+import './messages.scss';
 import { Socket } from 'socket.io-client';
 
 
@@ -14,36 +14,46 @@ type Message = {
 }
 
 function Messages({ socket }: MessagesProps): JSX.Element {
-  const [messagesRecieved, setMessagesRecieved] = useState<Message[]>([]);
+  // const [messagesRecieved, setMessagesRecieved] = useState<Message[]>([]);
+  const [messagesRecieved, setMessagesRecieved] = useState<Message[]>([{
+    message: 'string',
+    userName: 'string',
+    __createdtime__: 'string',
+  }, {
+    message: 'string',
+    userName: 'string',
+    __createdtime__: 'string',
+  }]);
 
-  useEffect(() => {
-    socket.on('recieve_last_messages', (data) => {
-      setMessagesRecieved(data);
-    });
+  // useEffect(() => {
+  //   socket.on('recieve_last_messages', (data) => {
+  //     setMessagesRecieved(data);
+  //   });
 
-    return () => {
-      socket.off('recieve_last_messages')
-    }
+  //   return () => {
+  //     socket.off('recieve_last_messages')
+  //   }
 
-  }, [socket])
+  // }, [socket])
 
-  useEffect(() => {
-    socket.on('recieve_message', (data) => {
-      setMessagesRecieved((state) => [
-        ...state,
-        {
-          message: data.message,
-          userName: data.userName,
-          __createdtime__: data.__createdtime__,
-        },
-      ]);
-    });
+  // useEffect(() => {
+  //   socket.on('recieve_message', (data) => {
+  //     setMessagesRecieved((state) => [
+  //       ...state,
+  //       {
+  //         message: data.message,
+  //         userName: data.userName,
+  //         __createdtime__: data.__createdtime__,
+  //       },
+  //     ]);
+  //   });
 
-    return () => {
-      socket.off('recieve_message')
-    }
+  //   return () => {
+  //     socket.off('recieve_message')
+  //   }
 
-  }, [socket])
+  // }, [socket])
+
 
   function formatDateFromTimeStamp(timestamp: string) {
     const date = new Date(timestamp);
@@ -51,16 +61,16 @@ function Messages({ socket }: MessagesProps): JSX.Element {
   }
 
   return (
-    <div className={styles.messagesColumn}>
+    <div className="messages">
       {messagesRecieved.map((msg, i) => (
-        <div className={styles.message} key={i}>
+        <div className="message" key={i}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span className={styles.msgMeta}>{msg.userName}</span>
-            <span className={styles.msgMeta}>
+            <span className="msgMeta">{msg.userName}</span>
+            <span className="msgMeta">
               {formatDateFromTimeStamp(msg.__createdtime__)}
             </span>
           </div>
-          <p className={styles.msgText}>{msg.message}</p>
+          <p className="msgText">{msg.message}</p>
           <br />
         </div>
       ))}
