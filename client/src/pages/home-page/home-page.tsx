@@ -21,11 +21,12 @@ export type Chat = {
 function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps): JSX.Element {
   const navigate = useNavigate();
   const [chats, setChats] = useState<Chat[]>([]);
-  const [creatingShow, setCreatingShow] = useState<boolean>(false);
+  const [creatingShow, setCreatingShow] = useState<boolean | string>(false);
   const [newChatName, setNewChatName] = useState<string>('');
 
   useEffect(() => {
     socket.on('recieve_chats', (data) => {
+      console.log(data.chats)
       setChats(data.chats)
     })
 
@@ -41,6 +42,11 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
       navigate('/chat', {replace: true});
     }
   };
+
+  const createRoom = () => {
+    socket.emit('create_room', {chatName: newChatName});
+    setNewChatName('');
+  }
 
 
   return (
@@ -64,7 +70,7 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
         <ul className={styles.chatList}>
           {
             true &&
-            [{chatName: 'Test1', _id: 1}, {chatName: 'yest23', _id: 2}].map((chat) => {
+            chats.map((chat) => {
               return (
                 <div className={styles.form_radio_btn} key={chat._id}>
                   <input id={`radio-${chat._id}`} type="radio" name="radio" value={chat.chatName} onChange={() => {
@@ -88,13 +94,9 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
             }
             {
               creatingShow &&
-              <div htmlFor="radio-new" className={styles.creating_container}>
+              <div className={styles.creating_container}>
                 <input placeholder="Введите название чата" type="text" value={newChatName} onChange={(evt) => setNewChatName(evt.target.value)} />
-                <button onClick={(evt) => {
-                  console.log(newChatName)
-                  socket.emit('create_room', {chatName: newChatName});
-                  setNewChatName('');
-                }}>Создать чат</button>
+                <button onClick={createRoom}>Создать чат</button>
               </div>
             }
           </li>

@@ -40,15 +40,16 @@ io.on('connection', async (socket) => {
     chats: channels,
   })
 
+  socket.on('create_room', async (data) => {
+    const chatRoom = new ChatRoom({
+      chatName: data.chatName,
+    });
+
+    chatRoom.save();
+  });
+
 
   socket.on('join_room', async (data) => {
-    if (!channels.find((channel) => channel.chatName === data.room.chatName)) {
-      const chatRoom = new ChatRoom({
-        chatName: data.room.chatName,
-      });
-      chatRoom.save();
-    }
-
     socket.join(data.room._id);
 
     let __createdtime__ = Date.now();
@@ -74,7 +75,6 @@ io.on('connection', async (socket) => {
 
   socket.on('get_last_messages', async (data) => {
     const lastMessages = await Message.find({ chatRoom: data.room });
-    console.log(lastMessages)
 
     socket.emit('recieve_last_messages', lastMessages);
   })
@@ -98,11 +98,4 @@ io.on('connection', async (socket) => {
 
 server.listen(4000, async () => {
   console.log('Server Ok!')
-  // try {
-  //   await client.connect();
-  //   collection = client.db('gamedev').collection('chats');
-  //   console.log('Server ok!', server.address().port);
-  // } catch (err) {
-  //   console.error(err);
-  // }
 });
