@@ -16,7 +16,7 @@ function ChatPage({ userName, room, socket }: ChatPageProps): JSX.Element {
   return (
     <div className="chatContainer">
         <Users />
-        <Messages socket={socket} />
+        <Messages socket={socket} userName={userName} />
         <SendMessage socket={socket} userName={userName} room={room} />
     </div>
   );

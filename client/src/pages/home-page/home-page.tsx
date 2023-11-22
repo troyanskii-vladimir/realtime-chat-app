@@ -55,7 +55,7 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
       <div className="textContainer">
         <h2 className="mainTitle">Chat app</h2>
         <h3 className="description">Чат приложение для обмена сообщениями между пользователями в реальном времени с возможностью выбора комнаты</h3>
-        <button className="btn" onClick={joinRoom}>Войти в чат</button>
+        <button className="btn btn-start" onClick={joinRoom}>Войти в чат</button>
       </div>
 
 

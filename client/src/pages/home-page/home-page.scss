@@ -41,14 +41,18 @@
   }
   .btn {
     display: block;
+    cursor: pointer;
+    
+
+    font-family: 'Jost', sans-serif;
+  }
+  .btn-start {
+    border: none;
     padding: 10px 30px;
     border-radius: 15px;
-    cursor: pointer;
-    border: none;
     margin-top: 32px;
     margin-left: auto;
     margin-right: auto;
-    font-family: 'Jost', sans-serif;
     font-weight: 700;
     font-size: 18px;
     text-transform: uppercase;
@@ -57,7 +61,7 @@
     transition: all 0.2s;
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
   }
-    .btn:hover {
+  .btn-start:hover {
     background-color: rgba(41, 50, 65, 1);
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
   }
@@ -98,7 +102,7 @@
     color: #f7eeff;
   }
   .form_radio_btn {
-      display: inline-block;
+    display: inline-block;
     border-radius: 15px;
     padding: 0 15px;
     margin: 5px 0;
@@ -106,7 +110,7 @@
     background-color: rgb(41, 50, 65);
   }
   .form_radio_btn_new {
-      display: inline-block;
+    display: inline-block;
     border-radius: 15px;
     padding: 0 15px;
     margin: 5px 0;

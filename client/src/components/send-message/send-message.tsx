@@ -1,5 +1,5 @@
 import { Socket } from 'socket.io-client';
-import styles from './send.module.css';
+import './send-message.scss';
 import { useState } from 'react';
 import { Chat } from '../../pages/home-page/home-page';
 
@@ -22,21 +22,21 @@ function SendMessage({ userName, room, socket }: SendMessageProps): JSX.Element 
   };
 
   return (
-    <div className={styles.sendMessageContainer}>
+    <div className="send_message">
       <input
-        className={styles.messageInput}
-        placeholder='Message...'
+        className="messageInput"
+        placeholder='Текст сообщения'
         onChange={(evt) => setMessage(evt.target.value)}
         value={message}
       />
-      <button className='btn btn-primary' onClick={sendMessage}>
+      <button className='btn btn-send' onClick={sendMessage}>
         Send Message
       </button>
-      <button className='btn btn-primary' onClick={() => {
+      {/* <button className='btn btn-primary' onClick={() => {
         socket.emit('get_last_messages', room)
       }}>
         Загрузить последние сообщения
-      </button>
+      </button> */}
     </div>
   );
 }
