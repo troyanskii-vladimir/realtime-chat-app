@@ -1,50 +1,68 @@
 /* Messages */
 .messages {
-    height: 90vh;
-    width: 75%;
+  height: 90vh;
+  width: 75%;
 
-    overflow: auto;
-    position: relative;
-    background-color: rgba(185, 214, 79, 1);
-    padding: 20px;
-    border: 10px solid rgb(41, 50, 65);
-    border-bottom: 5px solid rgb(41, 50, 65);
-    border-left: 5px solid rgb(41, 50, 65);
-  }
-  .message {
-    background: rgba(41, 50, 65, 0.8);
-    border-radius: 20px 20px 20px 0;
-    margin-bottom: 24px;
-    max-width: 500px;
-    padding: 12px;
-    font-family: 'Jost', sans-serif;
+  overflow: auto;
+  position: relative;
+  background-color: rgba(185, 214, 79, 1);
+  padding: 20px;
+  border: 10px solid rgb(41, 50, 65);
+  border-bottom: 5px solid rgb(41, 50, 65);
+  border-left: 5px solid rgb(41, 50, 65);
+}
 
-    &:last-child {
-      margin-bottom: 0px;
-    }
+*::-webkit-scrollbar {
+  width: 5px;
+}
+
+*::-webkit-scrollbar-track {
+  background: none;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 105, 51, 1);
+  border-radius: 0;
+}
+
+.message {
+  background: rgba(41, 50, 65, 0.8);
+  border-radius: 20px 20px 20px 0;
+  margin-bottom: 24px;
+  max-width: 500px;
+  padding: 12px;
+  font-family: 'Jost', sans-serif;
+
+  &:last-child {
+    margin-bottom: 0px;
   }
-  .my-message {
-    border-radius: 20px 20px 0 20px;
-    margin-left: auto;
-    background: rgba(64, 73, 90, 0.7);
-  }
-  .msgMetaContainer {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 10px 0 0;
-  }
-  .msgUserName {
-    color: rgb(153, 217, 234);
-    font-size: 16px;
-    font-weight: 700;
-  }
-  .msgTime {
-    color: rgb(153, 217, 234);
-    font-size: 14px;
-  }
-  .msgText {
-    color: #fff;
-    margin: 10px 2px;
-    font-size: 14px;
-  }
-  
+}
+
+.my-message {
+  border-radius: 20px 20px 0 20px;
+  margin-left: auto;
+  background: rgba(64, 73, 90, 0.7);
+}
+
+.msgMetaContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px 0 0;
+}
+
+.msgUserName {
+  color: rgb(153, 217, 234);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.msgTime {
+  color: rgb(153, 217, 234);
+  font-size: 14px;
+}
+
+.msgText {
+  color: #fff;
+  margin: 10px 2px;
+  font-size: 14px;
+}

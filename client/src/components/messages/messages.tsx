@@ -16,36 +16,6 @@ type Message = {
 
 function Messages({ socket, userName }: MessagesProps): JSX.Element {
   const [messagesRecieved, setMessagesRecieved] = useState<Message[]>([]);
-  // userName = 'vova';
-  // const [messagesRecieved, setMessagesRecieved] = useState<Message[]>([{
-  //   message: 'Мы любим животных и стараемся поддерживать тех из них, кому не посчастливилось иметь ласковых хозяев и тёплый кров. Один из проверенных способов это сделать — помочь благотворительному фонду «Луч Добра». Благодаря их труду ежегодно сотни питомцев находят свой новый дом',
-  //   userName: 'string',
-  //   __createdtime__: 'string',
-  // }, {
-  //   message: 'string2',
-  //   userName: 'vova',
-  //   __createdtime__: 'string',
-  // }, {
-  //   message: 'strin3',
-  //   userName: 'string',
-  //   __createdtime__: 'string',
-  // }, {
-  //   message: 'Но базовые сценарии поведения пользователей представляют собой не что иное',
-  //   userName: 'string',
-  //   __createdtime__: 'string',
-  // }, {
-  //   message: 'string',
-  //   userName: 'vova',
-  //   __createdtime__: 'string',
-  // }, {
-  //   message: 'И нет сомнений, что предприниматели в сети интернет объявлены нарушающими общечеловеческие нормы этики и морали',
-  //   userName: 'vova',
-  //   __createdtime__: 'string',
-  // }, {
-  //   message: 'string',
-  //   userName: 'string',
-  //   __createdtime__: 'string',
-  // }]);
 
   useEffect(() => {
     socket.on('recieve_last_messages', (data) => {
@@ -80,7 +50,6 @@ function Messages({ socket, userName }: MessagesProps): JSX.Element {
     const date = new Date(timestamp);
     return date.toLocaleTimeString();
   }
-
 
   return (
     <div className="messages">

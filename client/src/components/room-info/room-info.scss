@@ -1,0 +1,66 @@
+.room__info {
+  width: 25%;
+  height: 90vh;
+
+  position: relative;
+  background-color: rgba(255, 105, 51, 1);
+  border: 10px solid rgb(41, 50, 65);
+  border-bottom: 5px solid rgb(41, 50, 65);
+  border-right: 5px solid rgb(41, 50, 65);
+
+  font-family: 'Jost', sans-serif;
+  color: rgba(41, 50, 65, 1);
+}
+
+
+.info__list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  padding: 0;
+  margin: 0;
+
+  text-align: center;
+  list-style: none;
+}
+
+.info__item {
+  width: 100%;
+
+  padding: 0;
+  background-color: rgba(185, 214, 79, 1);
+
+  &:nth-last-child(3) {
+    border-top: 5px solid rgba(41, 50, 65, 1)
+  }
+
+  &:nth-last-child(2) {
+    border-top: 5px solid rgba(41, 50, 65, 1);
+    border-bottom: 5px solid rgb(41, 50, 65);
+  }
+}
+
+.btn__back {
+  width: 100%;
+
+  background-color: rgba(185, 214, 79, 1);
+  border: 0;
+  text-decoration: underline;
+  font-size: 16px;
+
+  &:hover {
+    background-color: rgb(161, 176, 106);
+  }
+}
+
+.room__describe {
+  margin: 0;
+
+  font-size: 14px;
+  color: rgba(41, 50, 65, 1);
+}
+
+.room__title {
+  margin: 2px;
+}

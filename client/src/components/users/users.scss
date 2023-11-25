@@ -1,32 +1,39 @@
 .users {
-    width: 25%;
-    height: 90vh;
+  width: 100%;
+  overflow: auto;
+  max-height: 70vh;
 
-    overflow: auto;
-    position: relative;
-    background-color: rgba(255, 105, 51, 1);
-    padding: 20px;
-    border: 10px solid rgb(41, 50, 65);
-    border-bottom: 5px solid rgb(41, 50, 65);
-    border-right: 5px solid rgb(41, 50, 65);
+  background-color: rgba(255, 105, 51, 1);
 
-    font-family: 'Jost', sans-serif;
-    color: rgba(41, 50, 65, 1);
+  font-family: 'Jost', sans-serif;
+  color: rgba(41, 50, 65, 1);
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .users__title {
-    margin: 0;
-    font-size: 20px;
+  margin: 2px;
+  font-size: 20px;
+
+  list-style: none;
+  font-weight: 400;
 }
 
 .users_list {
-    margin: 0;
+  text-align: start;
+  margin: 0;
 }
 
 .online_list .user__name {
   color: greenyellow;
 }
 
-.user__name {
+.offline_list .user__name {
+  color: #444;
+}
 
+.user__name {
+  list-style: none;
 }

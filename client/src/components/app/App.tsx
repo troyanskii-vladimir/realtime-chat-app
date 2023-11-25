@@ -29,16 +29,9 @@ function App(): JSX.Element {
           }
         />
 
-        <Route
-          path='/chat'
-          element={
-            <ChatPage
-              userName={userName}
-              room={room}
-              socket={socket}
-            />
-          }
-        />
+        <Route path='/chat'>
+          <Route path=':id' element={<ChatPage userName={userName} room={room} socket={socket} />} />
+        </Route>
 
       </Routes>
     </BrowserRouter>

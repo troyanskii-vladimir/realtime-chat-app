@@ -25,7 +25,6 @@ const io = new Server(server, {
   },
 });
 
-
 // const CHAT_BOT = 'Chat Bot';
 // let chatRoom = '';
 let allUsers = [];
@@ -42,6 +41,19 @@ io.on('connection', async (socket) => {
   socket.emit('recieve_chats', {
     chats: channels,
   });
+
+  socket.emit('recieve_online_users', {
+    onlineUsers: allOnlineUsers.map((user) => user.name),
+  })
+
+  socket.on('get_chats_data', () => {
+    socket.emit('recieve_chats', {
+      chats: channels,
+    });
+    socket.emit('recieve_online_users', {
+      onlineUsers: allOnlineUsers.map((user) => user.name),
+    })
+  })
 
   socket.on('create_room', async (data) => {
     const chatRoom = new ChatRoom({
@@ -62,9 +74,9 @@ io.on('connection', async (socket) => {
     baseChatName = data.room.chatName;
     baseChatId = data.room._id;
 
-    console.log(baseUserName, baseChatName)
-
     const lastMessages = await Message.find({ chatRoom: data.room });
+
+    allOnlineUsers.filter((userData) => userData.name !== baseUserName);
 
     const usersInRoom = [...allUsers].filter((dataUsers) => dataUsers.chatName === baseChatName) || [];
     const usersNamesInRoom = usersInRoom.map((dataUsers) => dataUsers.name) || [];
@@ -90,6 +102,28 @@ io.on('connection', async (socket) => {
     socket.emit('recieve_last_messages', lastMessages);
   });
 
+  socket.on('join_room_guest', async (data) => {
+    baseUserName = 'Guest';
+
+    const room = await ChatRoom.find({ chatName: data.chatRoomName })
+
+    baseChatName = room.chatName;
+    baseChatId = room._id;
+
+    console.log(baseChatId)
+
+    const lastMessages = await Message.find({ chatRoom: room });
+
+    const actualUsersInRoom = [...allUsers].filter((dataUsers) => dataUsers.chatName === data.chatRoomName) || [];
+    const onlineUsersInRoom = [...allOnlineUsers].filter((dataUsers) => dataUsers.chatName === data.chatRoomName) || [];
+    const users = actualUsersInRoom.map((allUsersData) => allUsersData.name);
+    const onlineUsers = onlineUsersInRoom.map((allUsersData) => allUsersData.name);
+
+    socket.join(baseChatId);
+    io.in(baseChatId).emit('recieve_room_data', {users, onlineUsers})
+    socket.emit('recieve_last_messages', lastMessages);
+  })
+
   socket.on('get_last_messages', async (data) => {
     const lastMessages = await Message.find({ chatRoom: data.room });
 
@@ -99,17 +133,27 @@ io.on('connection', async (socket) => {
   socket.on('send_message', (data) => {
     let __createdtime__ = Date.now();
 
-    console.log(allUsers)
-
     const message = new Message({
       message: data.message,
       createdAt: __createdtime__,
-      userName: data.userName,
-      chatRoom: data.room,
+      userName: baseUserName,
+      chatRoom: baseChatId, //нужно передать объект команты
     });
     message.save()
-    io.in(data.room._id).emit('recieve_message', data);
+    io.in(baseChatId).emit('recieve_message', data);
   });
+
+  socket.on('disc', () => {
+    console.log('Userd disconnec', baseUserName);
+    allOnlineUsers = [...allOnlineUsers].filter((dataUsers) => dataUsers.name !== baseUserName);
+
+    const actualUsersInRoom = [...allUsers].filter((dataUsers) => dataUsers.chatName === baseChatName) || [];
+    const onlineUsersInRoom = [...allOnlineUsers].filter((dataUsers) => dataUsers.chatName === baseChatName) || [];
+    const users = actualUsersInRoom.map((allUsersData) => allUsersData.name);
+    const onlineUsers = onlineUsersInRoom.map((allUsersData) => allUsersData.name);
+
+    io.in(baseChatId).emit('recieve_room_data', {users, onlineUsers})
+  })
 
   socket.on('disconnecting', () => {
     console.log('Userd disconnect', baseUserName);

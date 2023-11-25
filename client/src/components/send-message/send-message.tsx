@@ -21,6 +21,12 @@ function SendMessage({ userName, room, socket }: SendMessageProps): JSX.Element 
     }
   };
 
+  // window.addEventListener('keydown', (evt: KeyboardEvent) => {
+  //   if (evt.key === 'Enter') {
+  //     sendMessage();
+  //   }
+  // })
+
   return (
     <div className="send_message">
       <input
@@ -32,11 +38,6 @@ function SendMessage({ userName, room, socket }: SendMessageProps): JSX.Element 
       <button className='btn btn-send' onClick={sendMessage}>
         Send Message
       </button>
-      {/* <button className='btn btn-primary' onClick={() => {
-        socket.emit('get_last_messages', room)
-      }}>
-        Загрузить последние сообщения
-      </button> */}
     </div>
   );
 }

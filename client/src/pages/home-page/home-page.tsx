@@ -23,10 +23,26 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
   const [chats, setChats] = useState<Chat[]>([]);
   const [creatingShow, setCreatingShow] = useState<boolean | string>(false);
   const [newChatName, setNewChatName] = useState<string>('');
+  const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
+
+  useEffect(() => {
+    socket.emit('get_chats_data');
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    socket.on('recieve_online_users', (data) => {
+      setOnlineUsers(data.onlineUsers)
+    })
+
+    return () => {
+      socket.off('recieve_online_users')
+    }
+  }, [socket]);
 
   useEffect(() => {
     socket.on('recieve_chats', (data) => {
-      console.log(data.chats)
       setChats(data.chats)
     })
 
@@ -37,9 +53,7 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
 
   const joinRoom = () => {
     if (room !== null && userName !== '') {
-      socket.emit('join_room', {userName, room});
-
-      navigate('/chat', {replace: true});
+      navigate(`/chat/${room.chatName}`, {replace: true});
     }
   };
 
@@ -55,7 +69,13 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
       <div className="textContainer">
         <h2 className="mainTitle">Chat app</h2>
         <h3 className="description">Чат приложение для обмена сообщениями между пользователями в реальном времени с возможностью выбора комнаты</h3>
-        <button className="btn btn-start" onClick={joinRoom}>Войти в чат</button>
+        <button
+          className="btn btn-start"
+          disabled={onlineUsers.includes(userName)}
+          onClick={joinRoom}
+        >
+          Войти в чат
+        </button>
       </div>
 
 
@@ -67,16 +87,25 @@ function HomePage({userName, setUserName, room, setRoom, socket}: HomePageProps)
             setUserName(evt.target.value);
           }}
         />
+        {
+          onlineUsers.includes(userName) &&
+          <p>Пользователь с таким ником уже в сети</p>
+        }
         <ul className="chatList">
           {
             chats &&
             chats.map((chat) => {
               return (
                 <div className="form_radio_btn" key={chat._id}>
-                  <input id={`radio-${chat._id}`} type="radio" name="radio" value={chat.chatName} onChange={() => {
-                    setCreatingShow(false);
-                    setRoom(chat);
-                  }} />
+                  <input
+                    id={`radio-${chat._id}`}
+                    type="radio" name="radio"
+                    value={chat.chatName}
+                    onChange={() => {
+                      setCreatingShow(false);
+                      setRoom(chat);
+                    }}
+                  />
                   <label htmlFor={`radio-${chat._id}`}>{chat.chatName}</label>
                 </div>
               );
