@@ -20,7 +20,7 @@ app.use(cors());
 
 const io = new Server(server, {
   cors: {
-    origin: 'https://:realtime-chat-app-livid-kappa.vercel.app',
+    origin: 'https://realtime-chat-app-livid-kappa.vercel.app',
     methods: ['GET', 'POST'],
   },
 });
