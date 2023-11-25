@@ -5,7 +5,7 @@ import { io }  from 'socket.io-client';
 import { useState } from 'react';
 
 
-const socket = io('http://localhost:4000');
+const socket = io('https://realtim-chatt-app.onrender.com');
 
 
 function App(): JSX.Element {
